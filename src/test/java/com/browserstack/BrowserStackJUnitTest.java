@@ -39,7 +39,7 @@ public class BrowserStackJUnitTest {
 
         String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
 
-        def browserStackBrowser = System.getProperty("browser");
+        String browserStackBrowser = System.getProperty("browser");
         capabilities.setCapability("browser",browserStackBrowser);
 
         if(capabilities.getCapability("browserstack.local") != null && capabilities.getCapability("browserstack.local") == "true"){
