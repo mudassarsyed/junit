@@ -30,6 +30,7 @@ public class BrowserStackJUnitTest {
     public WebDriver driver;
     private Local l;
     private static JSONObject config;
+    public string url=System.getProperty("url");
 
     @Parameter(value = 0)
     public int taskID;
@@ -59,6 +60,7 @@ public class BrowserStackJUnitTest {
 
         String browserStackBrowser = System.getProperty("browser");
         capabilities.setCapability("browser",browserStackBrowser);
+        
 
         if(capabilities.getCapability("browserstack.local") != null && capabilities.getCapability("browserstack.local") == "true"){
             l = new Local();
