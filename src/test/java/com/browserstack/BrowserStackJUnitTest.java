@@ -30,50 +30,10 @@ public class BrowserStackJUnitTest {
     public WebDriver driver;
     private Local l;
 
-    private static JSONObject config;
-
-    @Parameter(value = 0)
-    public int taskID;
-
-    @Parameters
-    public static Iterable<? extends Object> data() throws Exception {
-        List<Integer> taskIDs = new ArrayList<Integer>();
-
-        if(System.getProperty("config") != null) {
-            JSONParser parser = new JSONParser();
-            config = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/" + System.getProperty("config")));
-            int envs = ((JSONArray)config.get("environments")).size();
-
-            for(int i=0; i<envs; i++) {
-              taskIDs.add(i);
-            }
-        }
-
-        return taskIDs;
-    }
-
+    
     @Before
     public void setUp() throws Exception {
-        JSONArray envs = (JSONArray) config.get("environments");
-
         DesiredCapabilities capabilities = new DesiredCapabilities();
-
-        Map<String, String> envCapabilities = (Map<String, String>) envs.get(taskID);
-        Iterator it = envCapabilities.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
-        }
-        
-        Map<String, String> commonCapabilities = (Map<String, String>) config.get("capabilities");
-        it = commonCapabilities.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            if(capabilities.getCapability(pair.getKey().toString()) == null){
-                capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
-            }
-        }
-
         String username = System.getenv("BROWSERSTACK_USERNAME");
         if(username == null) {
             username = (String) config.get("user");
@@ -83,6 +43,8 @@ public class BrowserStackJUnitTest {
         if(accessKey == null) {
             accessKey = (String) config.get("key");
         }
+        def browserStackBrowser = System.getProperty("browser");
+        capabilities.setCapability("browser",browserStackBrowser);
 
         if(capabilities.getCapability("browserstack.local") != null && capabilities.getCapability("browserstack.local") == "true"){
             l = new Local();
