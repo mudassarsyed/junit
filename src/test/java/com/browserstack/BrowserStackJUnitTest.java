@@ -30,7 +30,7 @@ public class BrowserStackJUnitTest {
     public WebDriver driver;
     private Local l;
     private static JSONObject config;
-    public string url=System.getProperty("url");
+    public string url = System.getProperty("url");
 
     @Parameter(value = 0)
     public int taskID;
