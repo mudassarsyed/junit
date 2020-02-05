@@ -35,14 +35,10 @@ public class BrowserStackJUnitTest {
     public void setUp() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         String username = System.getenv("BROWSERSTACK_USERNAME");
-        if(username == null) {
-            username = (String) config.get("user");
-        }
+
 
         String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
-        if(accessKey == null) {
-            accessKey = (String) config.get("key");
-        }
+
         def browserStackBrowser = System.getProperty("browser");
         capabilities.setCapability("browser",browserStackBrowser);
 
@@ -53,7 +49,7 @@ public class BrowserStackJUnitTest {
             l.start(options);
         }
 
-        driver = new RemoteWebDriver(new URL("https://"+username+":"+accessKey+"@"+config.get("server")+"/wd/hub"), capabilities);
+        driver = new RemoteWebDriver(new URL("https://"+username+":"+accessKey+"@hub-cloud.browserstack.com/wd/hub"), capabilities);
     }
 
     @After
