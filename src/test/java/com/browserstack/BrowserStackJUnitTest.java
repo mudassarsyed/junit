@@ -68,7 +68,7 @@ public class BrowserStackJUnitTest {
             options.put("key", accessKey);
             l.start(options);
         }
-
+     System.out.println(capabilities);
         driver = new RemoteWebDriver(new URL("https://"+username+":"+accessKey+"@hub-cloud.browserstack.com/wd/hub"), capabilities);
     }
 
